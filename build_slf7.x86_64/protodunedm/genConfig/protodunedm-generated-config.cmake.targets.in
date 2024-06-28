@@ -1,0 +1,11 @@
+####################################
+# Exported targets, and package components.
+####################################
+
+##################
+# Automatically-generated runtime targets: protodunedm
+##################
+include("${CMAKE_CURRENT_LIST_DIR}/protodunedmTargets.cmake")
+foreach (component IN LISTS protodunedm_FIND_COMPONENTS)
+  include("${CMAKE_CURRENT_LIST_DIR}/protodunedmTargets_${component}.cmake")
+endforeach()

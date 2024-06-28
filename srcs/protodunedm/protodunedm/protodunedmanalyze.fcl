@@ -1,0 +1,8 @@
+BEGIN_PROLOG
+
+analyzeprotodunedm:
+{
+  module_type: "ProtoDUNEDMAnalyze"
+}
+
+END_PROLOG

@@ -1,0 +1,9 @@
+####################################
+# Transitive dependencies.
+####################################
+set(_protodunedm_PACKAGE_PREFIX_DIR "${PACKAGE_PREFIX_DIR}")
+find_dependency(larsoft REQUIRED)
+find_dependency(nutools REQUIRED)
+find_dependency(art REQUIRED)
+set(PACKAGE_PREFIX_DIR "${_protodunedm_PACKAGE_PREFIX_DIR}")
+unset(_protodunedm_PACKAGE_PREFIX_DIR)

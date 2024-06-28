@@ -1,0 +1,14 @@
+BEGIN_PROLOG
+
+standard_hepmcfilegen:
+{
+  module_type:   "HepMCFileGen"
+  filename: "/afs/cern.ch/work/p/psajitha/public/protodune/Signal/Signal/NP04_1405MeV_detector_pimu_LarSoft.txt"
+  #filename: "/exp/dune/app/users/chasnip/CERN_Fellowship/ProtoDUNE_DM/textfile_data/NP04_1003MeV_detector_pimu_LarSoft.txt"
+  #filename: "/exp/dune/app/users/chasnip/CERN_Fellowship/ProtoDUNE_DM/textfile_data/NP04_1003MeV_detector_pie_LarSoft.txt"
+  #filename: "/exp/dune/app/users/chasnip/CERN_Fellowship/ProtoDUNE_DM/1003MeV_detector_pimu_LarSoft.txt"
+  #filename: "/exp/dune/app/users/chasnip/CERN_Fellowship/ProtoDUNE_DM/1003MeV_detector_pie_LarSoft.txt"
+  EventsPerPOT: 10
+}
+
+END_PROLOG

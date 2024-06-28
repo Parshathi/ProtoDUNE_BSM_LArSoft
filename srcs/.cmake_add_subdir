@@ -1,0 +1,4 @@
+# DO NOT DELETE 
+# protodunedm
+mrb_add_subdirectory(protodunedm)
+mrb_process_checkpoints()

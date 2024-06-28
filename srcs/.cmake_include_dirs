@@ -1,0 +1,4 @@
+# DO NOT DELETE 
+# protodunedm package block
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/protodunedm)
+include_directories($ENV{MRB_BUILDDIR}/protodunedm)

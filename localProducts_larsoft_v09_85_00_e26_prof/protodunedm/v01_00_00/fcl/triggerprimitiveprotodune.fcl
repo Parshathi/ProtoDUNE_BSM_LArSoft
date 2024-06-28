@@ -1,0 +1,8 @@
+BEGIN_PROLOG
+
+triggerprimitiveprotodune:
+{
+  module_type: "TriggerPrimitiveProtoDUNE"
+}
+
+END_PROLOG

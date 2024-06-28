@@ -1,0 +1,29 @@
+#include "protodunedmanalyze.fcl"
+#include "services_dune.fcl"
+
+process_name: ProtoDUNEDMAnalyze
+
+source:
+{
+  module_type: RootInput
+  maxEvents: -1
+}
+
+services:
+{
+  TFileService: { fileName: "protodunedm_output.root" }
+  @table::protodunehd_simulation_services
+}
+
+physics:
+{
+  analyzers:
+  {
+    ana: @local::analyzeprotodunedm
+  }
+  path1: [ ana ]
+  end_paths: [ path1 ]
+}
+
+physics.analyzers.ana.SimulationLabel: "largeant"
+physics.analyzers.ana.PDGcode: 13

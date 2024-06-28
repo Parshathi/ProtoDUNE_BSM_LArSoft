@@ -1,0 +1,26 @@
+#include "genie.fcl"
+
+BEGIN_PROLOG
+
+protodunehd_genie:                         @local::standard_genie
+protodunehd_genie.BeamName:                "ttwo"
+protodunehd_genie.EventsPerSpill:          1
+protodunehd_genie.POTPerSpill:             0
+protodunehd_genie.GlobalTimeOffset:        0
+protodunehd_genie.RandomTimeOffset:        0
+protodunehd_genie.EventGeneratorList:      "Default"
+protodunehd_genie.MonoEnergy:              10.
+#protodunehd_genie.FluxType:      "function"
+#protodunehd_genie.FunctionalFlux:"x"
+#protodunehd_genie.FunctionalBinning: 10000
+#protodunehd_genie.FluxEmin:      10
+#protodunehd_genie.FluxEmax:      20
+protodunehd_genie.BeamCenter:       [0., 0., 0.]
+#protodunehd_genie.TopVolume:  "volTPCActive"
+protodunehd_genie.TopVolume:  "volCryostat"
+#protodunehd_genie.FluxFiles:  ["dune_scan_flux.root"]
+protodunehd_genie.GenFlavors: [12,14,-12,-14]
+#protodunehd_genie.GeomScan:   "flux: 10000 1.1"
+
+
+END_PROLOG
