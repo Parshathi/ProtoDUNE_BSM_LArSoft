@@ -67,6 +67,11 @@ private:
   TTree *fSimulationNtuple;
   // TTrees for HNL signal selection
   TTree *fHNLSelectNtuple;
+  TTree *fTLtoExitMuon;
+  TTree *fTLtoExitPion;
+
+  TTree *fTrackLength_muon_tree;
+  TTree *fTrackLength_pion_tree;
 
   // Declare member data here.
   unsigned int fEventID;
@@ -97,6 +102,12 @@ private:
   double fEndPE[4];     ///< (Px,Py,Pz,E) at the true end of the particle
 
   double fTrackLength;
+  double TLmu;
+  double TLpi;
+  double TLtoexitMuon;
+  double TLtoexitPion;
+
+
 
   double fPrimaryVertex[4];
   double fPrimaryEnd[4];
@@ -107,6 +118,13 @@ private:
   double fdEdxPi;
   double fEMu;
   double fEPi;
+  double ftrackLengthToExit;
+
+
+  int flag_for_muon;
+  int flag_for_pion;
+
+
 
   bool fInFV;
   bool fPrimaryExit;
@@ -238,7 +256,22 @@ void ana::ProtoDUNEDMAnalyze::analyze(art::Event const& e)
 
     const double trackLength = (positionEnd - positionStart).Rho();
     fTrackLength = trackLength;
-
+    if(std::fabs(fSimPDG) == 13)
+    { 
+      TLmu = trackLength;
+      // TLpi = 0;
+      fTrackLength_muon_tree->Fill();
+    }
+    else if (std::fabs(fSimPDG) == 211)
+    {
+      TLpi = trackLength;
+      // TLmu = 0;
+      fTrackLength_pion_tree->Fill();
+    }
+    //const double trackLengthToExit= (positionExit - positionStart).Rho();
+    //if (std::fabs(fSimPDG) == 13) {TLtoexitMuon=trackLengthToExit; fHNLSelectNtuple->Fill();}
+      //  else if (std::fabs(fSimPDG) == 211) {TLtoexitPion=trackLengthToExit; fHNLSelectNtuple->Fill();} 
+      //
 	//---------------------------------------
     // Store total event outputs in the TTree
     fSimulationNtuple->Fill();
@@ -276,8 +309,10 @@ void ana::ProtoDUNEDMAnalyze::analyze(art::Event const& e)
       const TLorentzVector& positionExit = particle.Position(exit_trajpoint);
 
       const double trackLengthToExit = (positionExit - positionStart).Rho();
+      //ftrackLengthToExit=trackLengthToExit;
       fdEdx = (momentumStart - momentumExit).E() / trackLengthToExit;
-
+      if (std::fabs(fSimPDG) == 13) {TLtoexitMuon=trackLengthToExit; fTLtoExitMuon->Fill();}
+      else if (std::fabs(fSimPDG) == 211) {TLtoexitPion=trackLengthToExit; fTLtoExitPion->Fill();} 
       if (std::fabs(fSimPDG) == 13) fdEdxMu = (momentumStart - momentumExit).E() / trackLengthToExit;
       if (std::fabs(fSimPDG) == 211) fdEdxPi = (momentumStart - momentumExit).E() / trackLengthToExit;
 
@@ -327,6 +362,13 @@ void ana::ProtoDUNEDMAnalyze::analyze(art::Event const& e)
   // Selection is for the whole event, so do at end of loop
   fHNLSelectNtuple->Fill();
 }
+  // if(flag_for_muon==13 && flag_for_pion!=){ fTrackLength_muon_tree->Fill(); }
+  // if(flag_for_pion==211){ fTrackLength_pion_tree->Fill(); }
+  // Loop over simchannels 
+      //  if (std::fabs(fSimPDG) == 13) {TLtoexitMuon=trackLengthToExit; fHNLSelectNtuple->Fill();}
+        //      else if (std::fabs(fSimPDG) == 211) {TLtoexitPion=trackLengthToExit; fHNLSelectNtuple->Fill();} 
+               
+
 
 // Define outputs at start of the job
 void ana::ProtoDUNEDMAnalyze::beginJob()
@@ -381,11 +423,37 @@ void ana::ProtoDUNEDMAnalyze::beginJob()
   fHNLSelectNtuple->Branch("dEdxPi", &fdEdxPi, "dEdxPi/D");
   fHNLSelectNtuple->Branch("EMu", &fEMu, "EMu/D");
   fHNLSelectNtuple->Branch("EPi", &fEPi, "EPi/D");
+  //fHNLSelectNtuple->Branch("TLtoexitmuon",&TLtoexitMuon,"TLtoexitmuon/D");
+  //fHNLSelectNtuple->Branch("TLtoexitpion",&TLtoexitPion,"TLtoexitpion/D");
+
+
+
+
+
+  fTrackLength_muon_tree = tfs->make<TTree>("tracklengthpimu_muon", "TL Tree");
+  fTrackLength_muon_tree->SetAutoSave(0);
+  fTrackLength_muon_tree->Branch("TLMu", &TLmu, "TLMu/D");
+  
+  fTrackLength_pion_tree = tfs->make<TTree>("tracklengthpimu_pion", "TL Tree");
+  fTrackLength_pion_tree->SetAutoSave(0);
+  fTrackLength_pion_tree->Branch("TLPi", &TLpi, "TLPi/D");
+
+
+
+  fTLtoExitPion = tfs->make<TTree>("tracklengthtoexit_pimu_pion", "TL to exit Tree");
+  fTLtoExitPion->SetAutoSave(0);
+  fTLtoExitPion->Branch("TLtoExitPi", &TLtoexitPion, "TLtoExitPi/D");
+
+  fTLtoExitMuon = tfs->make<TTree>("tracklengthtoexit_pimu_muon", "TL to exit Tree");
+  fTLtoExitMuon->SetAutoSave(0);
+  fTLtoExitMuon->Branch("TLtoExitMu", &TLtoexitMuon, "TLtoExitMu/D");
+
+
 }
 
 void ana::ProtoDUNEDMAnalyze::endJob()
 {
   // Implementation of optional member function here.
 }
+ DEFINE_ART_MODULE(ana::ProtoDUNEDMAnalyze)
 
-DEFINE_ART_MODULE(ana::ProtoDUNEDMAnalyze)
