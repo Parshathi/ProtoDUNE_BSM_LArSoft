@@ -1,12 +1,10 @@
-# ProtoDUNE BSM LArSoft Code
+# ProtoDUNE BSM LArSoft Code 
 
 Allows for the simulation and analysis of BSM events in ProtoDUNE-HD.
 
 This includes full detector simulation.
 
 ## Building
-
-These steps should work on both lxplus and fermilab gpvm. I setup a specific larsoft version here that is relatively new, so it should have most of the newest features. This could need to be updated in the future.
 
 ```
 git clone https://github.com/CiaranH1997/ProtoDUNE_BSM_LArSoft.git
@@ -70,5 +68,47 @@ It is highly recommended you do this with a [VNC](https://sbnsoftware.github.io/
 - `ProtoDUNEDMAnalyze_module.cc`
 - `TriggerPrimitiveProtoDUNE_module.cc`
 
-## Generating GENIE Neutrino Events
 
+
+
+# Running jobs in cluster using HTCondor
+
+The connection to cluster is already done in the server. So, no commands are required specifically for connecting to the cluster.
+
+## Submitting jobs
+
+<ol>
+
+   <li>Create a script file, say, run1.sh, which have all the commands to do the job.</li>
+   <li>Create a submit description file, say, run1.sub, which has the following format:
+
+        ```
+        executable              = run1.sh
+
+        log                     = run1.log
+        output                  = run1.out
+        error                   = run1.err
+
+        should_transfer_files   = Yes
+        when_to_transfer_output = ON_EXIT
+
+        MY.WantOS = "el7"
+        +JobFlavour = "longlunch"
+
+        request_cpus            = 1
+        request_memory          = 512M
+        request_disk            = 1G
+
+        queue
+        ```
+  </li>
+   <li>Submit the job:
+```
+condor_submit run1.sub
+```
+</li>
+   <li>To check the status:
+```
+condor_q
+```</li>
+<ol>
