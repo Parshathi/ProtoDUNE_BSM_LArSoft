@@ -82,7 +82,7 @@ The connection to cluster is already done in the server. So, no commands are req
    <li>Create a script file, say, run1.sh, which have all the commands to do the job.</li>
    <li>Create a submit description file, say, run1.sub, which has the following format:
 
-        ```
+        
         executable              = run1.sh
 
         log                     = run1.log
@@ -100,15 +100,18 @@ The connection to cluster is already done in the server. So, no commands are req
         request_disk            = 1G
 
         queue
-        ```
+        
   </li>
    <li>Submit the job:
-```
-condor_submit run1.sub
-```
-</li>
+
+      
+      condor_submit run1.sub
+      
+   </li>
    <li>To check the status:
-```
-condor_q
-```</li>
+
+   
+      condor_q
+      
+   </li>
 <ol>
